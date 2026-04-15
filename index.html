@@ -15,8 +15,8 @@
         extend: {
           colors: {
             brand: {
-              950: '#0F1B2D',
-              900: '#152238',
+              950: '#0B1120',
+              900: '#0F1B2D',
               800: '#1E3A5F',
               700: '#1D4ED8',
               600: '#2563EB',
@@ -49,101 +49,245 @@
     html { scroll-behavior: smooth; }
     [v-cloak] { display: none; }
 
-    .img-placeholder {
+    /* ===== REVEAL ON SCROLL ===== */
+    .reveal {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .reveal.revealed {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.2s; }
+    .reveal-delay-3 { transition-delay: 0.3s; }
+    .reveal-delay-4 { transition-delay: 0.4s; }
+    .reveal-delay-5 { transition-delay: 0.5s; }
+
+    /* ===== HERO ===== */
+    .hero-bg {
+      background: #0B1120;
       position: relative;
       overflow: hidden;
-      background: linear-gradient(135deg, #1E3A5F 0%, #0F1B2D 100%);
     }
-    .img-placeholder img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-    .img-placeholder-label {
-      position: absolute;
-      inset: 0;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      color: rgba(255,255,255,0.35);
-      font-size: 0.75rem;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      pointer-events: none;
-    }
-    .img-placeholder-label svg {
-      width: 2rem;
-      height: 2rem;
-      margin-bottom: 0.5rem;
-      opacity: 0.35;
-    }
-
-    .card-glow {
-      transition: all 0.3s ease;
-    }
-    .card-glow:hover {
-      box-shadow: 0 4px 24px rgba(37, 99, 235, 0.08);
-      transform: translateY(-2px);
-    }
-
-    .hero-gradient {
-      background: #0F1B2D;
-      position: relative;
-    }
-    .hero-gradient::before {
+    .hero-bg::before {
       content: '';
       position: absolute;
       inset: 0;
       background:
-        radial-gradient(ellipse 80% 50% at 70% 40%, rgba(37, 99, 235, 0.15) 0%, transparent 70%),
-        radial-gradient(ellipse 60% 60% at 20% 80%, rgba(16, 185, 129, 0.08) 0%, transparent 60%),
-        radial-gradient(ellipse 40% 40% at 90% 10%, rgba(96, 165, 250, 0.1) 0%, transparent 50%);
+        radial-gradient(ellipse 80% 50% at 70% 40%, rgba(37,99,235,0.18) 0%, transparent 70%),
+        radial-gradient(ellipse 50% 50% at 20% 80%, rgba(16,185,129,0.1) 0%, transparent 60%),
+        radial-gradient(ellipse 40% 40% at 90% 10%, rgba(96,165,250,0.12) 0%, transparent 50%);
       z-index: 1;
     }
     .hero-grid {
       position: absolute;
       inset: 0;
       background-image:
-        linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
-      background-size: 60px 60px;
-      mask-image: radial-gradient(ellipse 70% 70% at 60% 50%, black 20%, transparent 70%);
-      -webkit-mask-image: radial-gradient(ellipse 70% 70% at 60% 50%, black 20%, transparent 70%);
+        linear-gradient(rgba(255,255,255,0.035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.035) 1px, transparent 1px);
+      background-size: 64px 64px;
+      mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 10%, transparent 70%);
+      -webkit-mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 10%, transparent 70%);
       z-index: 1;
     }
-    .hero-glow-line {
+    .hero-dots {
       position: absolute;
-      width: 300px;
-      height: 1px;
-      background: linear-gradient(90deg, transparent, rgba(37, 99, 235, 0.4), transparent);
+      inset: 0;
+      background-image: radial-gradient(rgba(96,165,250,0.15) 1px, transparent 1px);
+      background-size: 32px 32px;
+      mask-image: radial-gradient(ellipse 40% 40% at 75% 35%, black 0%, transparent 70%);
+      -webkit-mask-image: radial-gradient(ellipse 40% 40% at 75% 35%, black 0%, transparent 70%);
       z-index: 1;
-      pointer-events: none;
     }
-
     .orb {
       position: absolute;
       border-radius: 50%;
-      filter: blur(80px);
-      opacity: 0.2;
+      filter: blur(100px);
       pointer-events: none;
       z-index: 1;
+      will-change: transform;
+    }
+    .glow-line {
+      position: absolute;
+      height: 1px;
+      background: linear-gradient(90deg, transparent 0%, rgba(37,99,235,0.5) 50%, transparent 100%);
+      z-index: 1;
+      pointer-events: none;
     }
 
-    .step-connector {
-      display: none;
+    /* ===== PARALLAX ===== */
+    .parallax-layer {
+      will-change: transform;
+      transition: transform 0.1s linear;
     }
-    @media (min-width: 768px) {
-      .step-connector {
-        display: block;
-        position: absolute;
-        top: 2.5rem;
-        left: 100%;
-        width: 2rem;
-        height: 2px;
-        background: linear-gradient(to right, #2563EB, transparent);
-        z-index: 10;
-      }
+
+    /* ===== IMAGE PLACEHOLDERS ===== */
+    .img-placeholder {
+      position: relative;
+      overflow: hidden;
+      background: linear-gradient(135deg, #1E3A5F 0%, #0B1120 100%);
+    }
+    .img-placeholder img { width:100%; height:100%; object-fit:cover; }
+    .img-placeholder-label {
+      position: absolute; inset: 0;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      color: rgba(255,255,255,0.3); font-size: 0.7rem;
+      text-transform: uppercase; letter-spacing: 0.1em; pointer-events: none;
+    }
+    .img-placeholder-label svg { width:2rem; height:2rem; margin-bottom:0.5rem; opacity:0.3; }
+
+    /* ===== GLASSMORPHISM CARDS ===== */
+    .glass-card {
+      background: rgba(255,255,255,0.7);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255,255,255,0.8);
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .glass-card:hover {
+      background: rgba(255,255,255,0.9);
+      box-shadow: 0 8px 32px rgba(37,99,235,0.1), 0 0 0 1px rgba(37,99,235,0.1);
+      transform: translateY(-4px);
+    }
+
+    /* ===== GLOW BORDER CARDS ===== */
+    .glow-card {
+      position: relative;
+      background: white;
+      border: 1px solid #E2E8F0;
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .glow-card::before {
+      content: '';
+      position: absolute;
+      inset: -1px;
+      border-radius: inherit;
+      background: linear-gradient(135deg, rgba(37,99,235,0.3), rgba(16,185,129,0.3));
+      z-index: -1;
+      opacity: 0;
+      transition: opacity 0.4s ease;
+    }
+    .glow-card:hover {
+      border-color: transparent;
+      box-shadow: 0 8px 32px rgba(37,99,235,0.12);
+      transform: translateY(-4px);
+    }
+    .glow-card:hover::before { opacity: 1; }
+
+    /* ===== STEP CARDS ===== */
+    .step-card {
+      position: relative;
+      background: white;
+      border: 1px solid #E2E8F0;
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      overflow: hidden;
+    }
+    .step-card::after {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, #2563EB, #10B981);
+      opacity: 0;
+      transition: opacity 0.4s ease;
+    }
+    .step-card:hover {
+      box-shadow: 0 12px 40px rgba(37,99,235,0.1);
+      transform: translateY(-4px);
+    }
+    .step-card:hover::after { opacity: 1; }
+
+    /* ===== GLOW BUTTON ===== */
+    .btn-glow {
+      position: relative;
+      overflow: hidden;
+    }
+    .btn-glow::before {
+      content: '';
+      position: absolute;
+      inset: -2px;
+      border-radius: inherit;
+      background: linear-gradient(135deg, #2563EB, #10B981, #60A5FA, #2563EB);
+      background-size: 300% 300%;
+      animation: borderGlow 4s ease infinite;
+      z-index: -1;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+    .btn-glow:hover::before { opacity: 1; }
+    @keyframes borderGlow {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    /* ===== FLOATING ANIMATION ===== */
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-20px); }
+    }
+    .float { animation: float 6s ease-in-out infinite; }
+    .float-delay { animation: float 8s ease-in-out 2s infinite; }
+
+    /* ===== GRADIENT TEXT ===== */
+    .gradient-text {
+      background: linear-gradient(135deg, #60A5FA 0%, #10B981 50%, #60A5FA 100%);
+      background-size: 200% auto;
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: gradientText 5s ease infinite;
+    }
+    @keyframes gradientText {
+      0% { background-position: 0% center; }
+      50% { background-position: 200% center; }
+      100% { background-position: 0% center; }
+    }
+
+    /* ===== SECTION DIVIDER ===== */
+    .section-glow {
+      position: relative;
+    }
+    .section-glow::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 50%;
+      transform: translateX(-50%);
+      width: 200px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(37,99,235,0.3), transparent);
+    }
+
+    /* ===== FAQ ===== */
+    .faq-item {
+      transition: all 0.3s ease;
+    }
+    .faq-item:hover {
+      box-shadow: 0 4px 20px rgba(37,99,235,0.06);
+    }
+    .faq-open {
+      box-shadow: 0 4px 20px rgba(37,99,235,0.08);
+      border-color: rgba(37,99,235,0.2);
+    }
+    .faq-answer {
+      display: grid;
+      grid-template-rows: 0fr;
+      opacity: 0;
+      transition: grid-template-rows 0.35s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.25s ease;
+    }
+    .faq-answer > div {
+      overflow: hidden;
+      min-height: 0;
+      padding: 0;
+    }
+    .faq-answer-open {
+      grid-template-rows: 1fr;
+      opacity: 1;
+    }
+    .faq-answer-open > div {
+      padding: 0 1.5rem 1.5rem;
     }
   </style>
 </head>
@@ -153,54 +297,57 @@
 <div id="app" v-cloak>
 
   <!-- ========== SEÇÃO 1: HERO ========== -->
-  <section class="hero-gradient min-h-screen flex items-center relative overflow-hidden">
-    <!-- Background layers -->
+  <section class="hero-bg min-h-screen flex items-center" id="hero">
     <div class="hero-grid"></div>
-    <div class="hero-glow-line" style="top:20%; left:5%; transform:rotate(-5deg); width:400px;"></div>
-    <div class="hero-glow-line" style="top:65%; right:0; transform:rotate(8deg); width:350px;"></div>
-    <div class="hero-glow-line" style="top:45%; left:30%; transform:rotate(-2deg); width:250px; opacity:0.5;"></div>
-    <div class="orb w-[500px] h-[500px] bg-brand-600" style="top:-15%; right:-10%;"></div>
-    <div class="orb w-[350px] h-[350px] bg-brand-400" style="bottom:5%; left:-8%;"></div>
-    <div class="orb w-[200px] h-[200px] bg-accent" style="top:60%; right:25%;"></div>
+    <div class="hero-dots"></div>
+    <div class="glow-line parallax-layer" data-speed="0.02" style="top:18%; left:3%; width:450px; transform:rotate(-4deg);"></div>
+    <div class="glow-line parallax-layer" data-speed="0.03" style="top:62%; right:0; width:380px; transform:rotate(6deg);"></div>
+    <div class="glow-line parallax-layer" data-speed="0.015" style="top:42%; left:25%; width:280px; opacity:0.4; transform:rotate(-1deg);"></div>
+    <div class="glow-line parallax-layer" data-speed="0.025" style="bottom:20%; left:50%; width:320px; opacity:0.3; transform:rotate(3deg);"></div>
 
-    <div class="relative z-10 max-w-7xl mx-auto px-6 py-20 md:py-28">
+    <div class="orb parallax-layer" data-speed="0.04" style="width:600px; height:600px; top:-20%; right:-15%; background:#2563EB; opacity:0.2;"></div>
+    <div class="orb parallax-layer" data-speed="0.06" style="width:400px; height:400px; bottom:0; left:-10%; background:#60A5FA; opacity:0.15;"></div>
+    <div class="orb parallax-layer" data-speed="0.05" style="width:250px; height:250px; top:55%; right:20%; background:#10B981; opacity:0.12;"></div>
+    <div class="orb parallax-layer" data-speed="0.03" style="width:150px; height:150px; top:15%; left:35%; background:#3B82F6; opacity:0.1;"></div>
+
+    <div class="relative z-10 max-w-7xl mx-auto px-6 sm:px-8 py-20 md:py-28 w-full">
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
         <div class="text-center lg:text-left">
-          <div class="inline-flex items-center gap-2 bg-white/5 border border-white/10 rounded-full px-4 py-1.5 mb-8">
+          <div class="reveal inline-flex items-center gap-2 bg-white/[0.06] border border-white/10 rounded-full px-5 py-2 mb-8 backdrop-blur-sm">
             <span class="w-2 h-2 bg-accent rounded-full animate-pulse"></span>
-            <span class="text-sm text-slate-300">Advisory Operacional de Engenharia</span>
+            <span class="text-sm text-slate-300 font-medium">Advisory Operacional de Engenharia</span>
           </div>
-          <h1 class="text-3xl sm:text-4xl md:text-5xl lg:text-[3.5rem] font-extrabold text-white leading-[1.1] tracking-tight">
+          <h1 class="reveal reveal-delay-1 text-3xl sm:text-4xl md:text-5xl lg:text-[3.5rem] font-extrabold text-white leading-[1.1] tracking-tight">
             Sua engenharia trabalha muito.
-            <span class="block mt-2 bg-gradient-to-r from-brand-400 to-accent bg-clip-text text-transparent">Mas entrega o que deveria?</span>
+            <span class="block mt-3 gradient-text">Mas entrega o que deveria?</span>
           </h1>
-          <p class="mt-6 text-lg md:text-xl text-slate-300 max-w-xl leading-relaxed">
+          <p class="reveal reveal-delay-2 mt-7 text-lg md:text-xl text-slate-300/90 max-w-xl leading-relaxed">
             Identifico gargalos invisíveis na operação do seu time e implemento melhorias práticas para aumentar qualidade, previsibilidade e produtividade — sem burocratizar a entrega.
           </p>
-          <div class="mt-10 flex flex-col sm:flex-row items-stretch sm:items-center gap-4 lg:justify-start justify-center">
+          <div class="reveal reveal-delay-3 mt-10 flex flex-col sm:flex-row items-stretch sm:items-center gap-4 lg:justify-start justify-center">
             <a :href="whatsappLink('Olá! Gostaria de agendar uma conversa estratégica sobre a operação do meu time de engenharia.')"
                target="_blank"
-               class="inline-flex items-center justify-center gap-3 bg-brand-600 hover:bg-brand-500 text-white font-semibold text-base sm:text-lg px-6 sm:px-8 py-4 rounded-xl transition-all duration-200 shadow-lg shadow-brand-600/25 hover:shadow-brand-500/30 whitespace-nowrap">
+               class="btn-glow inline-flex items-center justify-center gap-3 bg-brand-600 hover:bg-brand-500 text-white font-semibold text-base sm:text-lg px-7 sm:px-9 py-4 rounded-xl transition-all duration-300 shadow-[0_0_30px_rgba(37,99,235,0.3)] hover:shadow-[0_0_40px_rgba(37,99,235,0.45)] whitespace-nowrap">
               <svg class="w-5 h-5 flex-shrink-0" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
               Agendar conversa estratégica
             </a>
             <a href="#como-funciona"
-               class="inline-flex items-center justify-center gap-3 border border-white/20 hover:border-white/40 text-slate-300 hover:text-white font-medium text-base sm:text-lg px-6 sm:px-8 py-4 rounded-xl transition-all duration-200 hover:bg-white/5 whitespace-nowrap">
+               class="inline-flex items-center justify-center gap-3 border border-white/15 hover:border-white/30 text-slate-300 hover:text-white font-medium text-base sm:text-lg px-7 sm:px-9 py-4 rounded-xl transition-all duration-300 hover:bg-white/[0.06] backdrop-blur-sm whitespace-nowrap">
               Ver como funciona
               <svg class="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
             </a>
           </div>
-          <p class="mt-5 text-sm text-slate-500">Sem compromisso. Conversa inicial de 30 minutos para entender seu cenário.</p>
+          <p class="reveal reveal-delay-4 mt-5 text-sm text-slate-500">Sem compromisso. Conversa inicial de 30 minutos para entender seu cenário.</p>
         </div>
 
-        <!-- Imagem Hero: hero-dashboard.png (1200x900) -->
-        <div class="hidden lg:block">
-          <div class="img-placeholder rounded-2xl aspect-[4/3] border border-white/10 shadow-2xl shadow-black/20">
-            <img src="images/hero-dashboard.png" alt="Dashboard de métricas de engenharia de software mostrando indicadores de entrega, qualidade e produtividade">
+        <!-- Imagem Hero -->
+        <div class="hidden lg:block reveal reveal-delay-3">
+          <div class="float img-placeholder rounded-2xl aspect-[4/3] border border-white/10 shadow-[0_0_60px_rgba(37,99,235,0.15)]">
+            <img src="images/hero-dashboard.png" alt="Dashboard de métricas de engenharia de software">
             <div class="img-placeholder-label">
               <svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="m2.25 15.75 5.159-5.159a2.25 2.25 0 0 1 3.182 0l5.159 5.159m-1.5-1.5 1.409-1.409a2.25 2.25 0 0 1 3.182 0l2.909 2.909M3.75 21h16.5A2.25 2.25 0 0 0 22.5 18.75V5.25A2.25 2.25 0 0 0 20.25 3H3.75A2.25 2.25 0 0 0 1.5 5.25v13.5A2.25 2.25 0 0 0 3.75 21Z"/></svg>
               <span>hero-dashboard.png</span>
-              <span style="font-size:0.65rem; margin-top:0.25rem;">1200 x 900 px</span>
+              <span style="font-size:0.6rem; margin-top:0.25rem; opacity:0.6;">1200 x 900 px</span>
             </div>
           </div>
         </div>
@@ -209,59 +356,61 @@
   </section>
 
   <!-- ========== SEÇÃO 2: DORES ========== -->
-  <section class="bg-surface-50 py-20 md:py-28">
-    <div class="max-w-6xl mx-auto px-6">
-      <div class="text-center max-w-2xl mx-auto">
+  <section class="bg-surface-50 py-20 md:py-28 section-glow">
+    <div class="max-w-6xl mx-auto px-6 sm:px-8">
+      <div class="text-center max-w-2xl mx-auto reveal">
         <span class="text-sm font-semibold text-brand-600 uppercase tracking-wider">Sintomas comuns</span>
         <h2 class="mt-3 text-2xl md:text-4xl font-bold text-text-primary">
           Reconhece algum desses sinais?
         </h2>
       </div>
       <div class="mt-14 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        <div v-for="pain in pains" :key="pain.title"
-             class="card-glow bg-white rounded-xl p-6 border border-surface-200">
+        <div v-for="(pain, i) in pains" :key="pain.title"
+             class="reveal glow-card rounded-2xl p-7"
+             :class="'reveal-delay-' + (i % 3 + 1)">
           <div class="w-12 h-12 rounded-xl bg-brand-50 flex items-center justify-center mb-5">
-            <span class="text-brand-600 text-2xl" v-html="pain.icon"></span>
+            <span class="text-brand-600" v-html="pain.icon"></span>
           </div>
           <h3 class="font-semibold text-lg text-text-primary">{{ pain.title }}</h3>
           <p class="mt-2 text-text-secondary text-sm leading-relaxed">{{ pain.description }}</p>
         </div>
       </div>
-      <p class="mt-14 text-center text-text-secondary text-lg max-w-2xl mx-auto">
+      <p class="mt-14 text-center text-text-secondary text-lg max-w-2xl mx-auto reveal">
         Se mais de um desses sinais aparece no seu dia a dia, o problema provavelmente não é o time. <strong class="text-text-primary">É a operação.</strong>
       </p>
     </div>
   </section>
 
   <!-- ========== SEÇÃO 3: SOLUÇÃO ========== -->
-  <section class="bg-white py-20 md:py-28">
-    <div class="max-w-6xl mx-auto px-6">
+  <section class="bg-white py-20 md:py-28 section-glow">
+    <div class="max-w-6xl mx-auto px-6 sm:px-8">
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
-        <!-- Imagem Solução: solution-clarity.png (1000x750) -->
-        <div class="order-2 lg:order-1">
-          <div class="img-placeholder rounded-2xl aspect-[4/3] shadow-xl">
-            <img src="images/solution-clarity.png" alt="Representação visual de fluxo de trabalho otimizado">
+        <div class="order-2 lg:order-1 reveal">
+          <div class="float-delay img-placeholder rounded-2xl aspect-[4/3] shadow-[0_20px_60px_rgba(0,0,0,0.1)]">
+            <img src="images/solution-clarity.png" alt="Fluxo de trabalho otimizado">
             <div class="img-placeholder-label">
               <svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="m2.25 15.75 5.159-5.159a2.25 2.25 0 0 1 3.182 0l5.159 5.159m-1.5-1.5 1.409-1.409a2.25 2.25 0 0 1 3.182 0l2.909 2.909M3.75 21h16.5A2.25 2.25 0 0 0 22.5 18.75V5.25A2.25 2.25 0 0 0 20.25 3H3.75A2.25 2.25 0 0 0 1.5 5.25v13.5A2.25 2.25 0 0 0 3.75 21Z"/></svg>
               <span>solution-clarity.png</span>
-              <span style="font-size:0.65rem; margin-top:0.25rem;">1000 x 750 px</span>
+              <span style="font-size:0.6rem; margin-top:0.25rem; opacity:0.6;">1000 x 750 px</span>
             </div>
           </div>
         </div>
         <div class="order-1 lg:order-2">
-          <span class="text-sm font-semibold text-brand-600 uppercase tracking-wider">A solução</span>
-          <h2 class="mt-3 text-2xl md:text-4xl font-bold text-text-primary leading-tight">
+          <span class="reveal text-sm font-semibold text-brand-600 uppercase tracking-wider">A solução</span>
+          <h2 class="reveal reveal-delay-1 mt-3 text-2xl md:text-4xl font-bold text-text-primary leading-tight">
             Engenharia mais eficiente começa por
             <span class="text-brand-600">enxergar o que está invisível</span>
           </h2>
-          <p class="mt-6 text-lg text-text-secondary leading-relaxed">
+          <p class="reveal reveal-delay-2 mt-6 text-lg text-text-secondary leading-relaxed">
             Atuo junto à liderança e ao time para identificar onde a engenharia perde eficiência e implementar ajustes práticos no fluxo de trabalho, na comunicação técnica e na execução.
           </p>
-          <p class="mt-4 text-lg font-medium text-text-primary">
+          <p class="reveal reveal-delay-2 mt-4 text-lg font-medium text-text-primary">
             O foco não é adicionar processo. É remover atrito.
           </p>
           <div class="mt-8 space-y-3">
-            <div v-for="item in solutionItems" :key="item" class="flex items-start gap-3">
+            <div v-for="(item, i) in solutionItems" :key="item"
+                 class="reveal flex items-start gap-3"
+                 :class="'reveal-delay-' + (i + 1)">
               <div class="w-6 h-6 rounded-full bg-accent/10 flex items-center justify-center flex-shrink-0 mt-0.5">
                 <svg class="w-3.5 h-3.5 text-accent" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/>
@@ -270,10 +419,10 @@
               <span class="text-text-primary">{{ item }}</span>
             </div>
           </div>
-          <div class="mt-10">
+          <div class="reveal reveal-delay-5 mt-10">
             <a :href="whatsappLink('Olá! Quero melhorar a operação de engenharia do meu time.')"
                target="_blank"
-               class="inline-flex items-center justify-center gap-3 bg-brand-600 hover:bg-brand-500 text-white font-semibold text-base sm:text-lg px-6 sm:px-8 py-4 rounded-xl transition-all duration-200 shadow-lg shadow-brand-600/20">
+               class="btn-glow inline-flex items-center justify-center gap-3 bg-brand-600 hover:bg-brand-500 text-white font-semibold text-base sm:text-lg px-7 sm:px-9 py-4 rounded-xl transition-all duration-300 shadow-[0_0_25px_rgba(37,99,235,0.2)] hover:shadow-[0_0_35px_rgba(37,99,235,0.35)]">
               <svg class="w-5 h-5 flex-shrink-0" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
               Quero melhorar minha operação
             </a>
@@ -284,9 +433,9 @@
   </section>
 
   <!-- ========== SEÇÃO 4: COMO FUNCIONA ========== -->
-  <section id="como-funciona" class="bg-surface-50 py-20 md:py-28">
-    <div class="max-w-6xl mx-auto px-6">
-      <div class="text-center max-w-2xl mx-auto">
+  <section id="como-funciona" class="bg-surface-50 py-20 md:py-28 section-glow">
+    <div class="max-w-6xl mx-auto px-6 sm:px-8">
+      <div class="text-center max-w-2xl mx-auto reveal">
         <span class="text-sm font-semibold text-brand-600 uppercase tracking-wider">Método</span>
         <h2 class="mt-3 text-2xl md:text-4xl font-bold text-text-primary">
           Um processo claro em 3 etapas
@@ -294,51 +443,51 @@
       </div>
       <div class="mt-14 grid grid-cols-1 md:grid-cols-3 gap-8">
         <div v-for="(step, index) in steps" :key="step.title"
-             class="relative card-glow bg-white rounded-xl p-8 border border-surface-200">
-          <div v-if="index < 2" class="step-connector"></div>
-          <div class="w-14 h-14 rounded-2xl bg-brand-600 flex items-center justify-center mb-6">
+             class="reveal step-card rounded-2xl p-8"
+             :class="'reveal-delay-' + (index + 1)">
+          <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-brand-600 to-brand-500 flex items-center justify-center mb-6 shadow-[0_0_20px_rgba(37,99,235,0.25)]">
             <span class="text-2xl font-bold text-white">{{ index + 1 }}</span>
           </div>
           <h3 class="text-xl font-bold text-text-primary">{{ step.title }}</h3>
           <p class="mt-3 text-text-secondary leading-relaxed">{{ step.description }}</p>
         </div>
       </div>
-      <p class="mt-12 text-center text-text-secondary text-base max-w-2xl mx-auto">
+      <p class="mt-12 text-center text-text-secondary text-base max-w-2xl mx-auto reveal">
         Cada etapa é adaptada ao estágio do time, à pressão do negócio e à estrutura atual da operação.
       </p>
     </div>
   </section>
 
   <!-- ========== SEÇÃO 5: ENTREGÁVEIS ========== -->
-  <section class="bg-white py-20 md:py-28">
-    <div class="max-w-6xl mx-auto px-6">
+  <section class="bg-white py-20 md:py-28 section-glow">
+    <div class="max-w-6xl mx-auto px-6 sm:px-8">
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
         <div>
-          <span class="text-sm font-semibold text-brand-600 uppercase tracking-wider">Entregáveis</span>
-          <h2 class="mt-3 text-2xl md:text-4xl font-bold text-text-primary">
+          <span class="reveal text-sm font-semibold text-brand-600 uppercase tracking-wider">Entregáveis</span>
+          <h2 class="reveal reveal-delay-1 mt-3 text-2xl md:text-4xl font-bold text-text-primary">
             O que fica para sua empresa
           </h2>
           <div class="mt-10 grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div v-for="item in deliverables" :key="item"
-                 class="flex items-start gap-3 p-3 bg-surface-50 rounded-lg">
+            <div v-for="(item, i) in deliverables" :key="item"
+                 class="reveal flex items-start gap-3 p-3 bg-surface-50 rounded-lg hover:bg-brand-50/50 transition-colors duration-300"
+                 :class="'reveal-delay-' + (i % 4 + 1)">
               <svg class="w-5 h-5 text-accent mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/>
               </svg>
               <span class="text-sm text-text-primary">{{ item }}</span>
             </div>
           </div>
-          <p class="mt-8 text-text-secondary leading-relaxed">
+          <p class="reveal mt-8 text-text-secondary leading-relaxed">
             Não entrego slides genéricos. Entrego documentos práticos, adaptados ao seu contexto, que a liderança pode usar no dia seguinte.
           </p>
         </div>
-        <!-- Imagem Entregáveis: deliverables-report.png (1000x750) -->
-        <div>
-          <div class="img-placeholder rounded-2xl aspect-[4/3] shadow-xl">
-            <img src="images/deliverables-report.png" alt="Mockup de relatório executivo de diagnóstico de engenharia">
+        <div class="reveal reveal-delay-2">
+          <div class="float img-placeholder rounded-2xl aspect-[4/3] shadow-[0_20px_60px_rgba(0,0,0,0.1)]">
+            <img src="images/deliverables-report.png" alt="Relatório executivo de diagnóstico">
             <div class="img-placeholder-label">
               <svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="m2.25 15.75 5.159-5.159a2.25 2.25 0 0 1 3.182 0l5.159 5.159m-1.5-1.5 1.409-1.409a2.25 2.25 0 0 1 3.182 0l2.909 2.909M3.75 21h16.5A2.25 2.25 0 0 0 22.5 18.75V5.25A2.25 2.25 0 0 0 20.25 3H3.75A2.25 2.25 0 0 0 1.5 5.25v13.5A2.25 2.25 0 0 0 3.75 21Z"/></svg>
               <span>deliverables-report.png</span>
-              <span style="font-size:0.65rem; margin-top:0.25rem;">1000 x 750 px</span>
+              <span style="font-size:0.6rem; margin-top:0.25rem; opacity:0.6;">1000 x 750 px</span>
             </div>
           </div>
         </div>
@@ -347,53 +496,55 @@
   </section>
 
   <!-- ========== SEÇÃO 6: PARA QUEM É ========== -->
-  <section class="bg-surface-50 py-20 md:py-28">
-    <div class="max-w-5xl mx-auto px-6">
-      <div class="text-center max-w-2xl mx-auto">
+  <section class="bg-surface-50 py-20 md:py-28 section-glow">
+    <div class="max-w-5xl mx-auto px-6 sm:px-8">
+      <div class="text-center max-w-2xl mx-auto reveal">
         <span class="text-sm font-semibold text-brand-600 uppercase tracking-wider">Perfil ideal</span>
         <h2 class="mt-3 text-2xl md:text-4xl font-bold text-text-primary">
           Para quem esse programa foi desenhado
         </h2>
       </div>
       <div class="mt-14 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        <div v-for="audience in audiences" :key="audience.title"
-             class="card-glow bg-white rounded-xl p-6 border border-surface-200">
+        <div v-for="(audience, i) in audiences" :key="audience.title"
+             class="reveal glow-card rounded-2xl p-7"
+             :class="'reveal-delay-' + (i % 3 + 1)">
           <div class="w-10 h-10 rounded-xl bg-brand-50 flex items-center justify-center mb-4">
-            <span class="text-brand-600 text-lg" v-html="audience.icon"></span>
+            <span class="text-brand-600" v-html="audience.icon"></span>
           </div>
           <h3 class="font-semibold text-text-primary">{{ audience.title }}</h3>
           <p class="mt-2 text-sm text-text-secondary leading-relaxed">{{ audience.description }}</p>
         </div>
       </div>
-      <p class="mt-14 text-center text-text-secondary text-lg max-w-3xl mx-auto">
+      <p class="mt-14 text-center text-text-secondary text-lg max-w-3xl mx-auto reveal">
         Se sua engenharia já tem produto rodando, backlog vivo e pressão por entrega, mas a operação ainda não está onde deveria — <strong class="text-text-primary">esse programa é para você.</strong>
       </p>
     </div>
   </section>
 
   <!-- ========== SEÇÃO 7: DIFERENCIAIS ========== -->
-  <section class="bg-white py-20 md:py-28">
-    <div class="max-w-6xl mx-auto px-6">
+  <section class="bg-white py-20 md:py-28 section-glow">
+    <div class="max-w-6xl mx-auto px-6 sm:px-8">
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
-        <!-- Imagem Diferenciais: differentials-advisor.png (1000x750) -->
-        <div>
-          <div class="img-placeholder rounded-2xl aspect-[4/3] shadow-xl">
-            <img src="images/differentials-advisor.png" alt="Profissional de tecnologia em reunião estratégica com liderança de engenharia">
+        <div class="reveal">
+          <div class="float-delay img-placeholder rounded-2xl aspect-[4/3] shadow-[0_20px_60px_rgba(0,0,0,0.1)]">
+            <img src="images/differentials-advisor.png" alt="Reunião estratégica de engenharia">
             <div class="img-placeholder-label">
               <svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="m2.25 15.75 5.159-5.159a2.25 2.25 0 0 1 3.182 0l5.159 5.159m-1.5-1.5 1.409-1.409a2.25 2.25 0 0 1 3.182 0l2.909 2.909M3.75 21h16.5A2.25 2.25 0 0 0 22.5 18.75V5.25A2.25 2.25 0 0 0 20.25 3H3.75A2.25 2.25 0 0 0 1.5 5.25v13.5A2.25 2.25 0 0 0 3.75 21Z"/></svg>
               <span>differentials-advisor.png</span>
-              <span style="font-size:0.65rem; margin-top:0.25rem;">1000 x 750 px</span>
+              <span style="font-size:0.6rem; margin-top:0.25rem; opacity:0.6;">1000 x 750 px</span>
             </div>
           </div>
         </div>
         <div>
-          <span class="text-sm font-semibold text-brand-600 uppercase tracking-wider">Diferenciais</span>
-          <h2 class="mt-3 text-2xl md:text-4xl font-bold text-text-primary">
+          <span class="reveal text-sm font-semibold text-brand-600 uppercase tracking-wider">Diferenciais</span>
+          <h2 class="reveal reveal-delay-1 mt-3 text-2xl md:text-4xl font-bold text-text-primary">
             Por que esse trabalho é diferente
           </h2>
           <div class="mt-10 space-y-5">
-            <div v-for="diff in differentials" :key="diff.title" class="flex items-start gap-4">
-              <div class="w-10 h-10 rounded-xl bg-brand-600 flex items-center justify-center flex-shrink-0">
+            <div v-for="(diff, i) in differentials" :key="diff.title"
+                 class="reveal flex items-start gap-4"
+                 :class="'reveal-delay-' + (i + 1)">
+              <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-brand-600 to-brand-500 flex items-center justify-center flex-shrink-0 shadow-[0_0_15px_rgba(37,99,235,0.2)]">
                 <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/>
                 </svg>
@@ -410,9 +561,9 @@
   </section>
 
   <!-- ========== SEÇÃO 8: FAQ ========== -->
-  <section class="bg-surface-50 py-20 md:py-28">
-    <div class="max-w-3xl mx-auto px-6">
-      <div class="text-center">
+  <section class="bg-surface-50 py-20 md:py-28 section-glow">
+    <div class="max-w-3xl mx-auto px-6 sm:px-8">
+      <div class="text-center reveal">
         <span class="text-sm font-semibold text-brand-600 uppercase tracking-wider">Dúvidas</span>
         <h2 class="mt-3 text-2xl md:text-4xl font-bold text-text-primary">
           Perguntas frequentes
@@ -420,21 +571,27 @@
       </div>
       <div class="mt-14 space-y-3">
         <div v-for="(faq, index) in faqs" :key="index"
-             class="bg-white rounded-xl border border-surface-200 overflow-hidden transition-shadow duration-200"
-             :class="{ 'shadow-md shadow-brand-600/5': openFaq === index }">
-          <button @click="toggleFaq(index)"
-                  class="w-full flex items-center justify-between p-6 text-left hover:bg-surface-50/50 transition-colors duration-150">
-            <span class="font-semibold text-text-primary pr-4">{{ faq.question }}</span>
-            <div class="w-8 h-8 rounded-lg bg-surface-50 flex items-center justify-center flex-shrink-0">
-              <svg class="w-4 h-4 text-text-muted transition-transform duration-200"
-                   :class="{ 'rotate-180': openFaq === index }"
-                   fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/>
-              </svg>
+             class="reveal"
+             :class="'reveal-delay-' + (index % 3 + 1)">
+          <div class="faq-item bg-white rounded-2xl border border-surface-200 transition-all duration-300"
+               :class="openFaq === index ? 'faq-open' : ''">
+            <button @click="toggleFaq(index)"
+                    class="w-full flex items-center justify-between p-6 text-left hover:bg-surface-50/50 transition-colors duration-200">
+              <span class="font-semibold text-text-primary pr-4">{{ faq.question }}</span>
+              <div class="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0 transition-colors duration-200"
+                   :class="openFaq === index ? 'bg-brand-600' : 'bg-surface-100'">
+                <svg class="w-4 h-4 transition-all duration-300"
+                     :class="openFaq === index ? 'rotate-180 text-white' : 'text-text-muted'"
+                     fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/>
+                </svg>
+              </div>
+            </button>
+            <div class="faq-answer" :class="openFaq === index ? 'faq-answer-open' : ''">
+              <div>
+                <p class="text-text-secondary leading-relaxed">{{ faq.answer }}</p>
+              </div>
             </div>
-          </button>
-          <div v-show="openFaq === index" class="px-6 pb-6">
-            <p class="text-text-secondary leading-relaxed">{{ faq.answer }}</p>
           </div>
         </div>
       </div>
@@ -442,36 +599,36 @@
   </section>
 
   <!-- ========== SEÇÃO 9: CTA FINAL ========== -->
-  <section class="hero-gradient py-20 md:py-28 relative overflow-hidden">
+  <section class="hero-bg py-24 md:py-32 relative overflow-hidden">
     <div class="hero-grid"></div>
-    <div class="hero-glow-line" style="top:30%; left:10%; transform:rotate(3deg); width:300px;"></div>
-    <div class="hero-glow-line" style="bottom:25%; right:5%; transform:rotate(-4deg); width:250px;"></div>
-    <div class="orb w-[400px] h-[400px] bg-brand-500" style="top:-30%; right:10%;"></div>
-    <div class="orb w-[300px] h-[300px] bg-accent" style="bottom:-20%; left:-5%;"></div>
+    <div class="glow-line" style="top:25%; left:8%; width:320px; transform:rotate(3deg);"></div>
+    <div class="glow-line" style="bottom:30%; right:5%; width:280px; transform:rotate(-4deg);"></div>
+    <div class="orb" style="width:500px; height:500px; top:-35%; right:5%; background:#2563EB; opacity:0.2;"></div>
+    <div class="orb" style="width:350px; height:350px; bottom:-25%; left:-8%; background:#10B981; opacity:0.15;"></div>
 
-    <div class="relative z-10 max-w-3xl mx-auto px-6 text-center">
-      <h2 class="text-2xl md:text-4xl font-bold text-white">
-        Descubra onde sua engenharia está perdendo eficiência
+    <div class="relative z-10 max-w-3xl mx-auto px-6 sm:px-8 text-center">
+      <h2 class="reveal text-2xl md:text-4xl lg:text-5xl font-bold text-white leading-tight">
+        Descubra onde sua engenharia<br class="hidden sm:block"> está <span class="gradient-text">perdendo eficiência</span>
       </h2>
-      <p class="mt-6 text-lg text-slate-300 max-w-2xl mx-auto leading-relaxed">
+      <p class="reveal reveal-delay-1 mt-7 text-lg text-slate-300/90 max-w-2xl mx-auto leading-relaxed">
         Uma conversa de 30 minutos pode ser o primeiro passo para transformar a operação do seu time. Sem compromisso, sem pitch — apenas uma análise inicial do seu cenário.
       </p>
-      <div class="mt-10">
+      <div class="reveal reveal-delay-2 mt-10">
         <a :href="whatsappLink('Olá! Gostaria de agendar uma conversa estratégica sobre a operação do meu time de engenharia.')"
            target="_blank"
-           class="inline-flex items-center justify-center gap-3 bg-white text-brand-950 font-semibold text-base sm:text-lg px-6 sm:px-8 py-4 rounded-xl transition-all duration-200 hover:bg-slate-100 shadow-lg shadow-black/10 whitespace-nowrap">
+           class="btn-glow inline-flex items-center justify-center gap-3 bg-white text-brand-950 font-semibold text-base sm:text-lg px-7 sm:px-9 py-4 rounded-xl transition-all duration-300 hover:bg-slate-100 shadow-[0_0_40px_rgba(255,255,255,0.1)] hover:shadow-[0_0_50px_rgba(255,255,255,0.2)] whitespace-nowrap">
           <svg class="w-5 h-5 text-accent flex-shrink-0" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
           Agendar conversa estratégica
         </a>
       </div>
-      <p class="mt-4 text-sm text-slate-500">Resposta em até 24 horas.</p>
+      <p class="reveal reveal-delay-3 mt-5 text-sm text-slate-500">Resposta em até 24 horas.</p>
     </div>
   </section>
 
   <!-- ========== FOOTER ========== -->
-  <footer class="bg-brand-950 border-t border-white/10 py-8">
+  <footer class="bg-brand-950 border-t border-white/5 py-8">
     <div class="max-w-6xl mx-auto px-6 text-center">
-      <p class="text-slate-500 text-sm">&copy; {{ new Date().getFullYear() }} — Programa de Aceleração de Entrega em Engenharia de Software</p>
+      <p class="text-slate-600 text-sm">&copy; {{ new Date().getFullYear() }} — Programa de Aceleração de Entrega em Engenharia de Software</p>
     </div>
   </footer>
 
@@ -485,40 +642,14 @@ createApp({
     return {
       whatsappNumber: '5500000000000',
       openFaq: null,
-
       pains: [
-        {
-          icon: '<svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/></svg>',
-          title: 'Entrega imprevisível',
-          description: 'Sprints nunca fecham como planejado. O prazo vira estimativa otimista.'
-        },
-        {
-          icon: '<svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0 3.181 3.183a8.25 8.25 0 0 0 13.803-3.7M4.031 9.865a8.25 8.25 0 0 1 13.803-3.7l3.181 3.182"/></svg>',
-          title: 'Retrabalho constante',
-          description: 'Tarefas voltam. Bugs retornam. O time refaz mais do que avança.'
-        },
-        {
-          icon: '<svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 0 1 3 19.875v-6.75ZM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 0 1-1.125-1.125V8.625ZM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 0 1-1.125-1.125V4.125Z"/></svg>',
-          title: 'Time ocupado, resultado aquém',
-          description: 'Todo mundo está trabalhando. Mas a entrega não acompanha o esforço.'
-        },
-        {
-          icon: '<svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 5.25a3 3 0 0 1 3 3m3 0a6 6 0 0 1-7.029 5.912c-.563-.097-1.159.026-1.563.43L10.5 17.25H8.25v2.25H6v2.25H2.25v-2.818c0-.597.237-1.17.659-1.591l6.499-6.499c.404-.404.527-1 .43-1.563A6 6 0 1 1 21.75 8.25Z"/></svg>',
-          title: 'Dependência de pessoas-chave',
-          description: 'Se uma ou duas pessoas saem, a operação trava.'
-        },
-        {
-          icon: '<svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z"/></svg>',
-          title: 'Gargalos silenciosos',
-          description: 'Review lento, QA confuso, deploy arriscado. Ninguém sabe exatamente onde perde tempo.'
-        },
-        {
-          icon: '<svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M20.25 8.511c.884.284 1.5 1.128 1.5 2.097v4.286c0 1.136-.847 2.1-1.98 2.193-.34.027-.68.052-1.02.072v3.091l-3-3c-1.354 0-2.694-.055-4.02-.163a2.115 2.115 0 0 1-.825-.242m9.345-8.334a2.126 2.126 0 0 0-.476-.095 48.64 48.64 0 0 0-8.048 0c-1.131.094-1.976 1.057-1.976 2.192v4.286c0 .837.46 1.58 1.155 1.951m9.345-8.334V6.637c0-1.621-1.152-3.026-2.76-3.235A48.455 48.455 0 0 0 11.25 3c-2.115 0-4.198.137-6.24.402-1.608.209-2.76 1.614-2.76 3.235v6.226c0 1.621 1.152 3.026 2.76 3.235.577.075 1.157.14 1.74.194V21l4.155-4.155"/></svg>',
-          title: 'Desalinhamento entre áreas',
-          description: 'Produto, negócio e engenharia falam línguas diferentes.'
-        }
+        { icon: '<svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/></svg>', title: 'Entrega imprevisível', description: 'Sprints nunca fecham como planejado. O prazo vira estimativa otimista.' },
+        { icon: '<svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0 3.181 3.183a8.25 8.25 0 0 0 13.803-3.7M4.031 9.865a8.25 8.25 0 0 1 13.803-3.7l3.181 3.182"/></svg>', title: 'Retrabalho constante', description: 'Tarefas voltam. Bugs retornam. O time refaz mais do que avança.' },
+        { icon: '<svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 0 1 3 19.875v-6.75ZM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 0 1-1.125-1.125V8.625ZM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 0 1-1.125-1.125V4.125Z"/></svg>', title: 'Time ocupado, resultado aquém', description: 'Todo mundo está trabalhando. Mas a entrega não acompanha o esforço.' },
+        { icon: '<svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 5.25a3 3 0 0 1 3 3m3 0a6 6 0 0 1-7.029 5.912c-.563-.097-1.159.026-1.563.43L10.5 17.25H8.25v2.25H6v2.25H2.25v-2.818c0-.597.237-1.17.659-1.591l6.499-6.499c.404-.404.527-1 .43-1.563A6 6 0 1 1 21.75 8.25Z"/></svg>', title: 'Dependência de pessoas-chave', description: 'Se uma ou duas pessoas saem, a operação trava.' },
+        { icon: '<svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z"/></svg>', title: 'Gargalos silenciosos', description: 'Review lento, QA confuso, deploy arriscado. Ninguém sabe exatamente onde perde tempo.' },
+        { icon: '<svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M20.25 8.511c.884.284 1.5 1.128 1.5 2.097v4.286c0 1.136-.847 2.1-1.98 2.193-.34.027-.68.052-1.02.072v3.091l-3-3c-1.354 0-2.694-.055-4.02-.163a2.115 2.115 0 0 1-.825-.242m9.345-8.334a2.126 2.126 0 0 0-.476-.095 48.64 48.64 0 0 0-8.048 0c-1.131.094-1.976 1.057-1.976 2.192v4.286c0 .837.46 1.58 1.155 1.951m9.345-8.334V6.637c0-1.621-1.152-3.026-2.76-3.235A48.455 48.455 0 0 0 11.25 3c-2.115 0-4.198.137-6.24.402-1.608.209-2.76 1.614-2.76 3.235v6.226c0 1.621 1.152 3.026 2.76 3.235.577.075 1.157.14 1.74.194V21l4.155-4.155"/></svg>', title: 'Desalinhamento entre áreas', description: 'Produto, negócio e engenharia falam línguas diferentes.' }
       ],
-
       solutionItems: [
         'Gargalos mapeados e priorizados',
         'Fluxo de entrega mais claro e previsível',
@@ -526,119 +657,77 @@ createApp({
         'Alinhamento melhor entre liderança e execução',
         'Time mais autônomo e produtivo'
       ],
-
       steps: [
-        {
-          title: 'Diagnóstico',
-          description: 'Entro na operação, observo o fluxo real, converso com liderança e pessoas-chave. Identifico onde estão os gargalos que reduzem qualidade, velocidade e previsibilidade.'
-        },
-        {
-          title: 'Plano de Melhoria',
-          description: 'Transformo o diagnóstico em um plano de ação priorizado: quick wins, ajustes de processo, mudanças estruturais. Tudo adaptado ao contexto real da equipe.'
-        },
-        {
-          title: 'Acompanhamento',
-          description: 'Sessões semanais com a liderança para implementar, ajustar e garantir adoção. A mudança acontece na prática, não no slide.'
-        }
+        { title: 'Diagnóstico', description: 'Entro na operação, observo o fluxo real, converso com liderança e pessoas-chave. Identifico onde estão os gargalos que reduzem qualidade, velocidade e previsibilidade.' },
+        { title: 'Plano de Melhoria', description: 'Transformo o diagnóstico em um plano de ação priorizado: quick wins, ajustes de processo, mudanças estruturais. Tudo adaptado ao contexto real da equipe.' },
+        { title: 'Acompanhamento', description: 'Sessões semanais com a liderança para implementar, ajustar e garantir adoção. A mudança acontece na prática, não no slide.' }
       ],
-
       deliverables: [
-        'Diagnóstico operacional do time',
-        'Mapa de gargalos da entrega',
-        'Relatório executivo com recomendações',
-        'Plano de ação priorizado',
-        'Proposta de métricas operacionais',
-        'Ajustes em rituais, fluxo e comunicação',
-        'Guia de boas práticas para o time',
-        'Relatório de evolução ao final'
+        'Diagnóstico operacional do time', 'Mapa de gargalos da entrega',
+        'Relatório executivo com recomendações', 'Plano de ação priorizado',
+        'Proposta de métricas operacionais', 'Ajustes em rituais, fluxo e comunicação',
+        'Guia de boas práticas para o time', 'Relatório de evolução ao final'
       ],
-
       audiences: [
-        {
-          icon: '<svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 21h19.5m-18-18v18m10.5-18v18m6-13.5V21M6.75 6.75h.75m-.75 3h.75m-.75 3h.75m3-6h.75m-.75 3h.75m-.75 3h.75M6.75 21v-3.375c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21M3 3h12m-.75 4.5H21m-3.75 3h.008v.008h-.008v-.008Zm0 3h.008v.008h-.008v-.008Zm0 3h.008v.008h-.008v-.008Z"/></svg>',
-          title: 'Software houses',
-          description: 'Que precisam melhorar entrega sem aumentar headcount.'
-        },
-        {
-          icon: '<svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15.59 14.37a6 6 0 0 1-5.84 7.38v-4.8m5.84-2.58a14.98 14.98 0 0 0 6.16-12.12A14.98 14.98 0 0 0 9.631 8.41m5.96 5.96a14.926 14.926 0 0 1-5.841 2.58m-.119-8.54a6 6 0 0 0-7.381 5.84h4.8m2.581-5.84a14.927 14.927 0 0 0-2.58 5.84m2.699 2.7c-.103.021-.207.041-.311.06a15.09 15.09 0 0 1-2.448-2.448 14.9 14.9 0 0 1 .06-.312m-2.24 2.39a4.493 4.493 0 0 0-1.757 4.306 4.493 4.493 0 0 0 4.306-1.758M16.5 9a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Z"/></svg>',
-          title: 'Startups em operação',
-          description: 'Com produto em produção e pressão por resultado.'
-        },
-        {
-          icon: '<svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M18 18.72a9.094 9.094 0 0 0 3.741-.479 3 3 0 0 0-4.682-2.72m.94 3.198.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0 1 12 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 0 1 6 18.719m12 0a5.971 5.971 0 0 0-.941-3.197m0 0A5.995 5.995 0 0 0 12 12.75a5.995 5.995 0 0 0-5.058 2.772m0 0a3 3 0 0 0-4.681 2.72 8.986 8.986 0 0 0 3.74.477m.94-3.197a5.971 5.971 0 0 0-.94 3.197M15 6.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm6 3a2.25 2.25 0 1 1-4.5 0 2.25 2.25 0 0 1 4.5 0Zm-13.5 0a2.25 2.25 0 1 1-4.5 0 2.25 2.25 0 0 1 4.5 0Z"/></svg>',
-          title: 'Empresas com squad interno',
-          description: 'Que sentem desorganização mesmo com gente boa no time.'
-        },
-        {
-          icon: '<svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17.25 6.75 22.5 12l-5.25 5.25m-10.5 0L1.5 12l5.25-5.25m7.5-3-4.5 16.5"/></svg>',
-          title: 'Times de 4 a 20 devs',
-          description: 'Com liderança sobrecarregada ou em formação.'
-        },
-        {
-          icon: '<svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"/></svg>',
-          title: 'Gestores que sabem que o time pode mais',
-          description: 'Mas não têm clareza sobre onde intervir.'
-        }
+        { icon: '<svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 21h19.5m-18-18v18m10.5-18v18m6-13.5V21M6.75 6.75h.75m-.75 3h.75m-.75 3h.75m3-6h.75m-.75 3h.75m-.75 3h.75M6.75 21v-3.375c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21M3 3h12m-.75 4.5H21m-3.75 3h.008v.008h-.008v-.008Zm0 3h.008v.008h-.008v-.008Zm0 3h.008v.008h-.008v-.008Z"/></svg>', title: 'Software houses', description: 'Que precisam melhorar entrega sem aumentar headcount.' },
+        { icon: '<svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15.59 14.37a6 6 0 0 1-5.84 7.38v-4.8m5.84-2.58a14.98 14.98 0 0 0 6.16-12.12A14.98 14.98 0 0 0 9.631 8.41m5.96 5.96a14.926 14.926 0 0 1-5.841 2.58m-.119-8.54a6 6 0 0 0-7.381 5.84h4.8m2.581-5.84a14.927 14.927 0 0 0-2.58 5.84m2.699 2.7c-.103.021-.207.041-.311.06a15.09 15.09 0 0 1-2.448-2.448 14.9 14.9 0 0 1 .06-.312m-2.24 2.39a4.493 4.493 0 0 0-1.757 4.306 4.493 4.493 0 0 0 4.306-1.758M16.5 9a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Z"/></svg>', title: 'Startups em operação', description: 'Com produto em produção e pressão por resultado.' },
+        { icon: '<svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M18 18.72a9.094 9.094 0 0 0 3.741-.479 3 3 0 0 0-4.682-2.72m.94 3.198.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0 1 12 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 0 1 6 18.719m12 0a5.971 5.971 0 0 0-.941-3.197m0 0A5.995 5.995 0 0 0 12 12.75a5.995 5.995 0 0 0-5.058 2.772m0 0a3 3 0 0 0-4.681 2.72 8.986 8.986 0 0 0 3.74.477m.94-3.197a5.971 5.971 0 0 0-.94 3.197M15 6.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm6 3a2.25 2.25 0 1 1-4.5 0 2.25 2.25 0 0 1 4.5 0Zm-13.5 0a2.25 2.25 0 1 1-4.5 0 2.25 2.25 0 0 1 4.5 0Z"/></svg>', title: 'Empresas com squad interno', description: 'Que sentem desorganização mesmo com gente boa no time.' },
+        { icon: '<svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17.25 6.75 22.5 12l-5.25 5.25m-10.5 0L1.5 12l5.25-5.25m7.5-3-4.5 16.5"/></svg>', title: 'Times de 4 a 20 devs', description: 'Com liderança sobrecarregada ou em formação.' },
+        { icon: '<svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"/></svg>', title: 'Gestores que sabem que o time pode mais', description: 'Mas não têm clareza sobre onde intervir.' }
       ],
-
       differentials: [
-        {
-          title: 'Experiência prática em engenharia',
-          description: 'Não sou consultor de slides. Tenho vivência real em times, entregas e operação de software.'
-        },
-        {
-          title: 'Visão técnica e operacional',
-          description: 'Entendo de arquitetura, backend, fluxo de entrega e gestão de execução. Falo com o dev e com o CTO.'
-        },
-        {
-          title: 'Abordagem pragmática',
-          description: 'Não aplico framework genérico. Adapto práticas ao contexto real da equipe.'
-        },
-        {
-          title: 'Foco em melhoria aplicável',
-          description: 'Toda recomendação é pensada para caber na rotina, não para enfeitar relatório.'
-        },
-        {
-          title: 'Sem burocracia desnecessária',
-          description: 'O objetivo é melhorar a operação, não criar processo por processo.'
-        }
+        { title: 'Experiência prática em engenharia', description: 'Não sou consultor de slides. Tenho vivência real em times, entregas e operação de software.' },
+        { title: 'Visão técnica e operacional', description: 'Entendo de arquitetura, backend, fluxo de entrega e gestão de execução. Falo com o dev e com o CTO.' },
+        { title: 'Abordagem pragmática', description: 'Não aplico framework genérico. Adapto práticas ao contexto real da equipe.' },
+        { title: 'Foco em melhoria aplicável', description: 'Toda recomendação é pensada para caber na rotina, não para enfeitar relatório.' },
+        { title: 'Sem burocracia desnecessária', description: 'O objetivo é melhorar a operação, não criar processo por processo.' }
       ],
-
       faqs: [
-        {
-          question: 'Isso é mentoria ou consultoria?',
-          answer: 'Nenhum dos dois no sentido tradicional. É um programa prático de melhoria operacional. Eu entro na operação, diagnostico gargalos e ajudo a implementar mudanças reais — com acompanhamento.'
-        },
-        {
-          question: 'Quanto tempo leva para ver resultado?',
-          answer: 'Os primeiros quick wins costumam aparecer nas primeiras 2 a 3 semanas. Melhorias estruturais levam de 6 a 8 semanas para se consolidar.'
-        },
-        {
-          question: 'Funciona para times pequenos?',
-          answer: 'Sim. Times de 4 a 20 pessoas são o perfil ideal. Muitas vezes, times menores têm mais a ganhar porque cada ajuste tem impacto proporcional maior.'
-        },
-        {
-          question: 'Preciso mudar tudo no meu processo?',
-          answer: 'Não. O objetivo é ajustar o que trava, não substituir tudo. A maioria das melhorias vem de mudanças pequenas e bem direcionadas.'
-        },
-        {
-          question: 'Como funciona a primeira conversa?',
-          answer: 'É uma conversa de 30 minutos, sem compromisso, para eu entender seu cenário e avaliar se faz sentido trabalharmos juntos. Sem pitch de vendas.'
-        },
-        {
-          question: 'Qual o investimento?',
-          answer: 'Depende do formato escolhido — diagnóstico, programa completo ou advisory contínuo. Na conversa inicial, alinharemos escopo e valor.'
-        }
+        { question: 'Isso é mentoria ou consultoria?', answer: 'Nenhum dos dois no sentido tradicional. É um programa prático de melhoria operacional. Eu entro na operação, diagnostico gargalos e ajudo a implementar mudanças reais — com acompanhamento.' },
+        { question: 'Quanto tempo leva para ver resultado?', answer: 'Os primeiros quick wins costumam aparecer nas primeiras 2 a 3 semanas. Melhorias estruturais levam de 6 a 8 semanas para se consolidar.' },
+        { question: 'Funciona para times pequenos?', answer: 'Sim. Times de 4 a 20 pessoas são o perfil ideal. Muitas vezes, times menores têm mais a ganhar porque cada ajuste tem impacto proporcional maior.' },
+        { question: 'Preciso mudar tudo no meu processo?', answer: 'Não. O objetivo é ajustar o que trava, não substituir tudo. A maioria das melhorias vem de mudanças pequenas e bem direcionadas.' },
+        { question: 'Como funciona a primeira conversa?', answer: 'É uma conversa de 30 minutos, sem compromisso, para eu entender seu cenário e avaliar se faz sentido trabalharmos juntos. Sem pitch de vendas.' },
+        { question: 'Qual o investimento?', answer: 'Depende do formato escolhido — diagnóstico, programa completo ou advisory contínuo. Na conversa inicial, alinharemos escopo e valor.' }
       ]
     }
   },
-
   methods: {
     whatsappLink(message) {
       return `https://wa.me/${this.whatsappNumber}?text=${encodeURIComponent(message)}`
     },
     toggleFaq(index) {
       this.openFaq = this.openFaq === index ? null : index
+    }
+  },
+  mounted() {
+    // Reveal on scroll
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('revealed')
+          observer.unobserve(entry.target)
+        }
+      })
+    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' })
+
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el))
+
+    // Parallax on mouse move (hero only)
+    const hero = document.getElementById('hero')
+    if (hero && window.matchMedia('(min-width: 1024px)').matches) {
+      hero.addEventListener('mousemove', (e) => {
+        const rect = hero.getBoundingClientRect()
+        const x = (e.clientX - rect.left) / rect.width - 0.5
+        const y = (e.clientY - rect.top) / rect.height - 0.5
+
+        hero.querySelectorAll('.parallax-layer').forEach(layer => {
+          const speed = parseFloat(layer.dataset.speed) || 0.03
+          const tx = x * speed * 1000
+          const ty = y * speed * 1000
+          layer.style.transform = `translate(${tx}px, ${ty}px)` + (layer.style.transform.includes('rotate') ? '' : '')
+        })
+      })
     }
   }
 }).mount('#app')
