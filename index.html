@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Programa de Aceleração de Entrega em Engenharia de Software</title>
+  <meta name="description" content="Identifico gargalos invisíveis na operação do seu time de desenvolvimento e implemento melhorias práticas para aumentar qualidade, previsibilidade e produtividade.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              950: '#0F1B2D',
+              900: '#152238',
+              800: '#1E3A5F',
+              600: '#2563EB',
+              500: '#3B82F6',
+              400: '#60A5FA',
+            },
+            accent: '#10B981',
+            surface: {
+              50: '#F8FAFC',
+              100: '#F1F5F9',
+              200: '#E2E8F0',
+            },
+            text: {
+              primary: '#0F172A',
+              secondary: '#64748B',
+              muted: '#94A3B8',
+            }
+          },
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+  <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
+  <style>
+    html { scroll-behavior: smooth; }
+    [v-cloak] { display: none; }
+  </style>
+</head>
+
+<body class="font-sans text-text-primary bg-white antialiased">
+
+<div id="app" v-cloak>
+
+  <!-- ========== SEÇÃO 1: HERO ========== -->
+  <section class="bg-brand-950 min-h-[90vh] flex items-center relative overflow-hidden">
+    <div class="absolute inset-0 bg-gradient-to-br from-brand-950 via-brand-900 to-brand-800 opacity-90"></div>
+    <div class="relative z-10 max-w-5xl mx-auto px-6 py-24 md:py-32 text-center">
+      <h1 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight tracking-tight">
+        Sua engenharia trabalha muito.<br class="hidden sm:block">
+        <span class="text-brand-400">Mas entrega o que deveria?</span>
+      </h1>
+      <p class="mt-6 text-lg md:text-xl text-slate-300 max-w-3xl mx-auto leading-relaxed">
+        Identifico gargalos invisíveis na operação do seu time de desenvolvimento e implemento melhorias práticas para aumentar qualidade, previsibilidade e produtividade — sem burocratizar a entrega.
+      </p>
+      <div class="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
+        <a :href="whatsappLink('Olá! Gostaria de agendar uma conversa estratégica sobre a operação do meu time de engenharia.')"
+           target="_blank"
+           class="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-brand-600 hover:bg-brand-500 text-white font-semibold text-lg px-8 py-4 rounded-lg transition-colors duration-200">
+          <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          Agendar conversa estratégica
+        </a>
+        <a href="#como-funciona"
+           class="w-full sm:w-auto inline-flex items-center justify-center gap-2 border border-slate-400 hover:border-white text-slate-300 hover:text-white font-medium text-lg px-8 py-4 rounded-lg transition-colors duration-200">
+          Ver como funciona
+        </a>
+      </div>
+      <p class="mt-4 text-sm text-slate-400">Sem compromisso. Conversa inicial de 30 minutos para entender seu cenário.</p>
+    </div>
+  </section>
+
+  <!-- ========== SEÇÃO 2: DORES ========== -->
+  <section class="bg-surface-50 py-20 md:py-28">
+    <div class="max-w-6xl mx-auto px-6">
+      <h2 class="text-2xl md:text-4xl font-bold text-center text-text-primary">
+        Reconhece algum desses sinais?
+      </h2>
+      <div class="mt-14 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div v-for="pain in pains" :key="pain.title"
+             class="bg-white rounded-xl p-6 border border-surface-200 hover:border-brand-400 transition-colors duration-200">
+          <div class="w-10 h-10 rounded-lg bg-brand-600/10 flex items-center justify-center mb-4">
+            <span class="text-brand-600 text-xl" v-html="pain.icon"></span>
+          </div>
+          <h3 class="font-semibold text-lg text-text-primary">{{ pain.title }}</h3>
+          <p class="mt-2 text-text-secondary text-sm leading-relaxed">{{ pain.description }}</p>
+        </div>
+      </div>
+      <p class="mt-12 text-center text-text-secondary text-lg max-w-2xl mx-auto">
+        Se mais de um desses sinais aparece no seu dia a dia, o problema provavelmente não é o time. <strong class="text-text-primary">É a operação.</strong>
+      </p>
+    </div>
+  </section>
+
+  <!-- ========== SEÇÃO 3: SOLUÇÃO ========== -->
+  <section class="bg-white py-20 md:py-28">
+    <div class="max-w-4xl mx-auto px-6 text-center">
+      <h2 class="text-2xl md:text-4xl font-bold text-text-primary">
+        Engenharia mais eficiente começa por<br class="hidden md:block">
+        <span class="text-brand-600">enxergar o que está invisível</span>
+      </h2>
+      <p class="mt-6 text-lg text-text-secondary max-w-2xl mx-auto leading-relaxed">
+        Atuo junto à liderança e ao time para identificar onde a engenharia perde eficiência e implementar ajustes práticos no fluxo de trabalho, na comunicação técnica e na execução.
+      </p>
+      <p class="mt-4 text-lg font-medium text-text-primary">
+        O foco não é adicionar processo. É remover atrito.
+      </p>
+      <div class="mt-12 grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-2xl mx-auto text-left">
+        <div v-for="item in solutionItems" :key="item"
+             class="flex items-start gap-3 p-3">
+          <svg class="w-5 h-5 text-accent mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/>
+          </svg>
+          <span class="text-text-primary">{{ item }}</span>
+        </div>
+      </div>
+      <div class="mt-12">
+        <a :href="whatsappLink('Olá! Quero melhorar a operação de engenharia do meu time.')"
+           target="_blank"
+           class="inline-flex items-center justify-center gap-2 bg-brand-600 hover:bg-brand-500 text-white font-semibold px-8 py-4 rounded-lg transition-colors duration-200">
+          Quero melhorar minha operação de engenharia
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== SEÇÃO 4: COMO FUNCIONA ========== -->
+  <section id="como-funciona" class="bg-surface-50 py-20 md:py-28">
+    <div class="max-w-6xl mx-auto px-6">
+      <h2 class="text-2xl md:text-4xl font-bold text-center text-text-primary">
+        Um processo claro em 3 etapas
+      </h2>
+      <div class="mt-14 grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div v-for="(step, index) in steps" :key="step.title"
+             class="relative bg-white rounded-xl p-8 border border-surface-200">
+          <span class="text-5xl font-bold text-brand-600/15">{{ String(index + 1).padStart(2, '0') }}</span>
+          <h3 class="mt-2 text-xl font-semibold text-text-primary">{{ step.title }}</h3>
+          <p class="mt-3 text-text-secondary leading-relaxed">{{ step.description }}</p>
+        </div>
+      </div>
+      <p class="mt-10 text-center text-text-secondary text-base max-w-2xl mx-auto">
+        Cada etapa é adaptada ao estágio do time, à pressão do negócio e à estrutura atual da operação.
+      </p>
+    </div>
+  </section>
+
+  <!-- ========== SEÇÃO 5: ENTREGÁVEIS ========== -->
+  <section class="bg-white py-20 md:py-28">
+    <div class="max-w-5xl mx-auto px-6">
+      <h2 class="text-2xl md:text-4xl font-bold text-center text-text-primary">
+        O que fica para sua empresa
+      </h2>
+      <div class="mt-14 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+        <div v-for="item in deliverables" :key="item"
+             class="flex items-start gap-3 p-4 bg-surface-50 rounded-lg">
+          <svg class="w-5 h-5 text-accent mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/>
+          </svg>
+          <span class="text-sm text-text-primary">{{ item }}</span>
+        </div>
+      </div>
+      <p class="mt-10 text-center text-text-secondary max-w-2xl mx-auto">
+        Não entrego slides genéricos. Entrego documentos práticos, adaptados ao seu contexto, que a liderança pode usar no dia seguinte.
+      </p>
+    </div>
+  </section>
+
+  <!-- ========== SEÇÃO 6: PARA QUEM É ========== -->
+  <section class="bg-surface-50 py-20 md:py-28">
+    <div class="max-w-5xl mx-auto px-6">
+      <h2 class="text-2xl md:text-4xl font-bold text-center text-text-primary">
+        Para quem esse programa foi desenhado
+      </h2>
+      <div class="mt-14 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div v-for="audience in audiences" :key="audience.title"
+             class="bg-white rounded-xl p-6 border border-surface-200">
+          <h3 class="font-semibold text-text-primary">{{ audience.title }}</h3>
+          <p class="mt-2 text-sm text-text-secondary leading-relaxed">{{ audience.description }}</p>
+        </div>
+      </div>
+      <p class="mt-12 text-center text-text-secondary text-lg max-w-3xl mx-auto">
+        Se sua engenharia já tem produto rodando, backlog vivo e pressão por entrega, mas a operação ainda não está onde deveria — <strong class="text-text-primary">esse programa é para você.</strong>
+      </p>
+    </div>
+  </section>
+
+  <!-- ========== SEÇÃO 7: DIFERENCIAIS ========== -->
+  <section class="bg-white py-20 md:py-28">
+    <div class="max-w-5xl mx-auto px-6">
+      <h2 class="text-2xl md:text-4xl font-bold text-center text-text-primary">
+        Por que esse trabalho é diferente
+      </h2>
+      <div class="mt-14 space-y-6 max-w-3xl mx-auto">
+        <div v-for="diff in differentials" :key="diff.title"
+             class="flex items-start gap-5 p-6 bg-surface-50 rounded-xl">
+          <div class="w-10 h-10 rounded-lg bg-brand-600 flex items-center justify-center flex-shrink-0">
+            <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/>
+            </svg>
+          </div>
+          <div>
+            <h3 class="font-semibold text-text-primary text-lg">{{ diff.title }}</h3>
+            <p class="mt-1 text-text-secondary leading-relaxed">{{ diff.description }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== SEÇÃO 8: FAQ ========== -->
+  <section class="bg-surface-50 py-20 md:py-28">
+    <div class="max-w-3xl mx-auto px-6">
+      <h2 class="text-2xl md:text-4xl font-bold text-center text-text-primary">
+        Perguntas frequentes
+      </h2>
+      <div class="mt-14 space-y-3">
+        <div v-for="(faq, index) in faqs" :key="index"
+             class="bg-white rounded-xl border border-surface-200 overflow-hidden">
+          <button @click="toggleFaq(index)"
+                  class="w-full flex items-center justify-between p-6 text-left hover:bg-surface-50 transition-colors duration-150">
+            <span class="font-semibold text-text-primary pr-4">{{ faq.question }}</span>
+            <svg class="w-5 h-5 text-text-muted flex-shrink-0 transition-transform duration-200"
+                 :class="{ 'rotate-180': openFaq === index }"
+                 fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/>
+            </svg>
+          </button>
+          <div v-show="openFaq === index" class="px-6 pb-6">
+            <p class="text-text-secondary leading-relaxed">{{ faq.answer }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== SEÇÃO 9: CTA FINAL ========== -->
+  <section class="bg-brand-950 py-20 md:py-28">
+    <div class="max-w-3xl mx-auto px-6 text-center">
+      <h2 class="text-2xl md:text-4xl font-bold text-white">
+        Descubra onde sua engenharia está perdendo eficiência
+      </h2>
+      <p class="mt-6 text-lg text-slate-300 max-w-2xl mx-auto leading-relaxed">
+        Uma conversa de 30 minutos pode ser o primeiro passo para transformar a operação do seu time. Sem compromisso, sem pitch — apenas uma análise inicial do seu cenário.
+      </p>
+      <div class="mt-10">
+        <a :href="whatsappLink('Olá! Gostaria de agendar uma conversa estratégica sobre a operação do meu time de engenharia.')"
+           target="_blank"
+           class="inline-flex items-center justify-center gap-2 bg-brand-600 hover:bg-brand-500 text-white font-semibold text-lg px-8 py-4 rounded-lg transition-colors duration-200">
+          <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          Agendar conversa estratégica
+        </a>
+      </div>
+      <p class="mt-4 text-sm text-slate-400">Resposta em até 24 horas.</p>
+    </div>
+  </section>
+
+  <!-- ========== FOOTER ========== -->
+  <footer class="bg-brand-950 border-t border-white/10 py-8">
+    <div class="max-w-6xl mx-auto px-6 text-center">
+      <p class="text-slate-400 text-sm">&copy; {{ new Date().getFullYear() }} — Programa de Aceleração de Entrega em Engenharia de Software</p>
+    </div>
+  </footer>
+
+</div>
+
+<script>
+const { createApp } = Vue
+
+createApp({
+  data() {
+    return {
+      whatsappNumber: '5500000000000',
+      openFaq: null,
+
+      pains: [
+        {
+          icon: '&#9202;',
+          title: 'Entrega imprevisível',
+          description: 'Sprints nunca fecham como planejado. O prazo vira estimativa otimista.'
+        },
+        {
+          icon: '&#x21BB;',
+          title: 'Retrabalho constante',
+          description: 'Tarefas voltam. Bugs retornam. O time refaz mais do que avança.'
+        },
+        {
+          icon: '&#9888;',
+          title: 'Time ocupado, resultado aquém',
+          description: 'Todo mundo está trabalhando. Mas a entrega não acompanha o esforço.'
+        },
+        {
+          icon: '&#128274;',
+          title: 'Dependência de pessoas-chave',
+          description: 'Se uma ou duas pessoas saem, a operação trava.'
+        },
+        {
+          icon: '&#128269;',
+          title: 'Gargalos silenciosos',
+          description: 'Review lento, QA confuso, deploy arriscado. Ninguém sabe exatamente onde perde tempo.'
+        },
+        {
+          icon: '&#128172;',
+          title: 'Desalinhamento entre áreas',
+          description: 'Produto, negócio e engenharia falam línguas diferentes.'
+        }
+      ],
+
+      solutionItems: [
+        'Gargalos mapeados e priorizados',
+        'Fluxo de entrega mais claro e previsível',
+        'Redução de desperdício e retrabalho',
+        'Alinhamento melhor entre liderança e execução',
+        'Time mais autônomo e produtivo'
+      ],
+
+      steps: [
+        {
+          title: 'Diagnóstico',
+          description: 'Entro na operação, observo o fluxo real, converso com liderança e pessoas-chave. Identifico onde estão os gargalos que reduzem qualidade, velocidade e previsibilidade.'
+        },
+        {
+          title: 'Plano de Melhoria',
+          description: 'Transformo o diagnóstico em um plano de ação priorizado: quick wins, ajustes de processo, mudanças estruturais. Tudo adaptado ao contexto real da equipe.'
+        },
+        {
+          title: 'Acompanhamento',
+          description: 'Sessões semanais com a liderança para implementar, ajustar e garantir adoção. A mudança acontece na prática, não no slide.'
+        }
+      ],
+
+      deliverables: [
+        'Diagnóstico operacional do time',
+        'Mapa de gargalos da entrega',
+        'Relatório executivo com recomendações',
+        'Plano de ação priorizado',
+        'Proposta de métricas operacionais',
+        'Ajustes em rituais, fluxo e comunicação',
+        'Guia de boas práticas para o time',
+        'Relatório de evolução ao final do programa'
+      ],
+
+      audiences: [
+        {
+          title: 'Software houses',
+          description: 'Que precisam melhorar entrega sem aumentar headcount.'
+        },
+        {
+          title: 'Startups em operação',
+          description: 'Com produto em produção e pressão por resultado.'
+        },
+        {
+          title: 'Empresas com squad interno',
+          description: 'Que sentem desorganização mesmo com gente boa no time.'
+        },
+        {
+          title: 'Times de 4 a 20 devs',
+          description: 'Com liderança sobrecarregada ou em formação.'
+        },
+        {
+          title: 'Gestores que sabem que o time pode mais',
+          description: 'Mas não têm clareza sobre onde intervir.'
+        }
+      ],
+
+      differentials: [
+        {
+          title: 'Experiência prática em engenharia',
+          description: 'Não sou consultor de slides. Tenho vivência real em times, entregas e operação de software.'
+        },
+        {
+          title: 'Visão técnica e operacional',
+          description: 'Entendo de arquitetura, backend, fluxo de entrega e gestão de execução. Falo com o dev e com o CTO.'
+        },
+        {
+          title: 'Abordagem pragmática',
+          description: 'Não aplico framework genérico. Adapto práticas ao contexto real da equipe.'
+        },
+        {
+          title: 'Foco em melhoria aplicável',
+          description: 'Toda recomendação é pensada para caber na rotina, não para enfeitar relatório.'
+        },
+        {
+          title: 'Sem burocracia desnecessária',
+          description: 'O objetivo é melhorar a operação, não criar processo por processo.'
+        }
+      ],
+
+      faqs: [
+        {
+          question: 'Isso é mentoria ou consultoria?',
+          answer: 'Nenhum dos dois no sentido tradicional. É um programa prático de melhoria operacional. Eu entro na operação, diagnostico gargalos e ajudo a implementar mudanças reais — com acompanhamento.'
+        },
+        {
+          question: 'Quanto tempo leva para ver resultado?',
+          answer: 'Os primeiros quick wins costumam aparecer nas primeiras 2 a 3 semanas. Melhorias estruturais levam de 6 a 8 semanas para se consolidar.'
+        },
+        {
+          question: 'Funciona para times pequenos?',
+          answer: 'Sim. Times de 4 a 20 pessoas são o perfil ideal. Muitas vezes, times menores têm mais a ganhar porque cada ajuste tem impacto proporcional maior.'
+        },
+        {
+          question: 'Preciso mudar tudo no meu processo?',
+          answer: 'Não. O objetivo é ajustar o que trava, não substituir tudo. A maioria das melhorias vem de mudanças pequenas e bem direcionadas.'
+        },
+        {
+          question: 'Como funciona a primeira conversa?',
+          answer: 'É uma conversa de 30 minutos, sem compromisso, para eu entender seu cenário e avaliar se faz sentido trabalharmos juntos. Sem pitch de vendas.'
+        },
+        {
+          question: 'Qual o investimento?',
+          answer: 'Depende do formato escolhido — diagnóstico, programa completo ou advisory contínuo. Na conversa inicial, alinharemos escopo e valor.'
+        }
+      ]
+    }
+  },
+
+  methods: {
+    whatsappLink(message) {
+      return `https://wa.me/${this.whatsappNumber}?text=${encodeURIComponent(message)}`
+    },
+    toggleFaq(index) {
+      this.openFaq = this.openFaq === index ? null : index
+    }
+  }
+}).mount('#app')
+</script>
+
+</body>
+</html>
